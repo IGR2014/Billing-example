@@ -13,16 +13,20 @@ namespace billing {
 	// Currency representation class
 	class Currency {
 
-		unsigned int	wholePart;		// Whole dollars count
-		unsigned char	fractionPart;		// Fraction dollars count (cents)
+		long long	cents;		// Cents count
 
 
 	public:
 
 		// C-tor
-		Currency() : wholePart(0), fractionPart(0) {};
+		Currency() : cents(0L) {};
 		// D-tor
 		~Currency();
+
+		// Set currency
+		explicit Currency(long long _cents) : cents(_cents) {};
+		// Set currency #2
+		Currency(const long long _dollars, const unsigned int _cents);
 
 		// Addition operator
 		inline Currency operator+(const Currency &_cur);
@@ -38,14 +42,14 @@ namespace billing {
 		Currency operator-();
 
 		// Print number to provided output stream
-		std::ostream& print(std::ostream &os) const;
+		std::ostream& print(std::ostream &_os) const;
 
 
 	};
 
 
 	// Non-member non-friend ostream operator
-	std::ostream& operator<<(std::ostream &_os, Currency &_currency);
+	std::ostream& operator<<(std::ostream &_os, const Currency &_currency);
 
 
 }	// namespace billing

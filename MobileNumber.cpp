@@ -65,7 +65,7 @@ namespace billing {
 
 
 	// Non-member non-friend ostream operator
-	std::ostream& operator<<(std::ostream &_os, MobileNumber &_mobileNumber) {
+	std::ostream& operator<<(std::ostream &_os, const MobileNumber &_mobileNumber) {
 
 		return _mobileNumber.print(_os);
 
