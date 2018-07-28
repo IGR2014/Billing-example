@@ -38,14 +38,17 @@ namespace billing {
 	// Print number to provided output stream
 	std::ostream& CallInfo::print(std::ostream &_os) const {
 
-		_os	<< "Call to "									\
-			<< number									\
-			<< " from "									\
-			<< startTime.count()								\
-			<< " to "									\
-			<< endTime.count()								\
-			<< " lasts "									\
-			<< std::chrono::duration_cast<std::chrono::minutes>(endTime - startTime).count()\
+		unsigned long long timeSec	= std::chrono::duration_cast<std::chrono::minutes>(endTime - startTime).count();
+		unsigned long long timeInc	= ((((endTime - startTime).count() % 60L) == 0L) ? 0L : 1L);
+
+		_os	<< "Call to "										\
+			<< number										\
+			<< " from "										\
+			<< startTime.count()									\
+			<< " to "										\
+			<< endTime.count()									\
+			<< " lasts "										\
+			<< timeSec + timeInc									\
 			<< " minutes";
 
 		return _os;

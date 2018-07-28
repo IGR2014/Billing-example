@@ -7,6 +7,7 @@
 #include <chrono>
 
 #include "MobileNumber.hpp"
+#include "Currency.hpp"
 
 
 // Main app namespace
@@ -19,12 +20,13 @@ namespace billing {
 		MobileNumber		number;			// Called mobile number
 		std::chrono::seconds	startTime;		// Call start time (seconds since epoch)
 		std::chrono::seconds	endTime;		// Call start time (seconds since epoch)
+		Currency		callFee;		// Call fee (will be calculated)
 
 
 	public:
 
 		// C-tor
-		CallInfo() : number(), startTime(0), endTime(0) {};
+		CallInfo() : number(), startTime(0), endTime(0), callFee(0L) {};
 		// D-tor
 		~CallInfo();
 
@@ -48,6 +50,12 @@ namespace billing {
 			endTime = _endTime;
 
 		}
+		// Set call fee
+		inline void setFee(const Currency &_callFee) {
+
+			callFee = _callFee;
+
+		}
 
 		// Get called number
 		inline MobileNumber getNumber() const {
@@ -66,6 +74,12 @@ namespace billing {
 		inline std::chrono::seconds getTimingEnd() const {
 
 			return endTime;
+
+		}
+		// Get call fee
+		inline Currency getFee() const {
+
+			return callFee;
 
 		}
 

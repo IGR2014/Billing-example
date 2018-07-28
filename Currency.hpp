@@ -29,9 +29,9 @@ namespace billing {
 		Currency(const long long _dollars, const unsigned int _cents);
 
 		// Addition operator
-		inline Currency operator+(const Currency &_cur);
+		Currency operator+(const Currency &_cur);
 		// Subtraction operator
-		inline Currency operator-(const Currency &_cur);
+		Currency operator-(const Currency &_cur);
 
 		// Self-addition operator
 		Currency& operator+=(const Currency &_cur);

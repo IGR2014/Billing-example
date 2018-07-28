@@ -7,17 +7,9 @@
 
 int main (int argc, char* argv[]) {
 
-	billing::MobileNumber	mobileNumber(50, 841672);
+	billing::CallInfo	call0(billing::MobileNumber(63, 1234206), std::chrono::seconds(0), std::chrono::seconds(3601));
 
-	std::cout << mobileNumber << std::endl;
-
-	billing::Currency	dollar(40, 53);
-
-	std::cout << dollar << std::endl;
-
-	billing::CallInfo	info(mobileNumber, std::chrono::seconds(2400), std::chrono::seconds(8760));
-
-	std::cout << info << std::endl;
+	std::cout << call0 << std::endl;
 
 	return 0;
 
