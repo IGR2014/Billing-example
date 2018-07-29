@@ -1,3 +1,5 @@
+#include <iomanip>
+
 #include "Currency.hpp"
 
 
@@ -74,9 +76,11 @@ namespace billing {
 		long long _cents	= cents % 100L;
 
 		// Formatted currency output
-		_os	<< "$"		\
-			<< dollars	\
-			<< "."		\
+		_os	<< "$"			\
+			<< dollars		\
+			<< "."			\
+			<< std::setw(2)		\
+			<< std::setfill('0')	\
 			<< _cents;
 
 		return _os;

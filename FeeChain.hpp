@@ -50,6 +50,9 @@ namespace billing {
 		// D-tor
 		~FeeFixed();
 
+		// Set fee
+		explicit FeeFixed(const Currency &_newFixedFee) : fixedFeeValue(_newFixedFee) {};
+
 		// Set value of fixed fee
 		inline void setFee(const Currency &_fixedFeeValue) {
 

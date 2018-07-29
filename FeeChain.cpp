@@ -33,7 +33,11 @@ namespace billing {
 	// Fee calculation method
 	void FeeChainItem::calcFee(CallInfo* _info) {
 
-		feeList->calcFee(_info);
+		if (feeList) {
+		
+			feeList->calcFee(_info);
+
+		}
 
 	}
 
