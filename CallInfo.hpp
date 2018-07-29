@@ -14,38 +14,42 @@
 namespace billing {
 
 
+	// Not good but helps to reduce boilerplate code with std::chrono
+	using namespace std::chrono;
+
+
 	// Call information storing class
 	class CallInfo {
 
-		MobileNumber		number;			// Called mobile number
-		std::chrono::seconds	startTime;		// Call start time (seconds since epoch)
-		std::chrono::seconds	endTime;		// Call start time (seconds since epoch)
-		Currency		callFee;		// Call fee (will be calculated)
+		MobileNumber			number;			// Called mobile number
+		system_clock::time_point	startTime;		// Call start time (seconds since epoch)
+		system_clock::time_point	endTime;		// Call start time (seconds since epoch)
+		Currency			callFee;		// Call fee (will be calculated)
 
 
 	public:
 
 		// C-tor
-		CallInfo() : number(), startTime(0), endTime(0), callFee(0L) {};
+		CallInfo() : number(), startTime(system_clock::now()), endTime(system_clock::now()), callFee(0L) {};
 		// D-tor
 		~CallInfo();
 
 		// Set call info
-		CallInfo(const MobileNumber &_number, const std::chrono::seconds &_startTime, const std::chrono::seconds &_endTime);
+		CallInfo(const MobileNumber &_number, const system_clock::time_point &_startTime, const system_clock::time_point &_endTime);
 
 		// Set called number
 		void setNumber(const MobileNumber &_number);
 
 		// Set call timing
-		void setTiming(const std::chrono::seconds &_startTime, const std::chrono::seconds &_endTime);
+		void setTiming(const system_clock::time_point &_startTime, const system_clock::time_point &_endTime);
 		// Set call start time
-		inline void setTimingStart(const std::chrono::seconds &_startTime) {
+		inline void setTimingStart(const system_clock::time_point &_startTime) {
 
 			startTime = _startTime;
 
 		}
 		// Set call end time
-		inline void setTimingEnd(const std::chrono::seconds &_endTime) {
+		inline void setTimingEnd(const system_clock::time_point &_endTime) {
 
 			endTime = _endTime;
 
@@ -65,13 +69,13 @@ namespace billing {
 		}
 
 		// Get call start time
-		inline std::chrono::seconds getTimingStart() const {
+		inline system_clock::time_point getTimingStart() const {
 
 			return startTime;
 
 		}
 		// Get call end time
-		inline std::chrono::seconds getTimingEnd() const {
+		inline system_clock::time_point getTimingEnd() const {
 
 			return endTime;
 

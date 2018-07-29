@@ -1,5 +1,6 @@
 #include <string>
 #include <chrono>
+#include <iomanip>
 
 #include "CallInfo.hpp"
 
@@ -11,13 +12,13 @@ namespace billing {
 	// D-tor
 	CallInfo::~CallInfo() {
 
-		startTime = endTime = std::chrono::seconds(0);
+		startTime = endTime = system_clock::now();
 
 	}
 
 
 	// Set call info
-	CallInfo::CallInfo(const MobileNumber &_number, const std::chrono::seconds &_startTime, const std::chrono::seconds &_endTime) {
+	CallInfo::CallInfo(const MobileNumber &_number, const system_clock::time_point &_startTime, const system_clock::time_point &_endTime) {
 
 		number		= _number;
 		startTime	= _startTime;
@@ -27,7 +28,7 @@ namespace billing {
 
 
 	// Set call timing
-	void CallInfo::setTiming(const std::chrono::seconds &_startTime, const std::chrono::seconds &_endTime) {
+	void CallInfo::setTiming(const system_clock::time_point &_startTime, const system_clock::time_point &_endTime) {
 
 		setTimingStart	(_startTime);
 		setTimingEnd	(_endTime);
@@ -38,15 +39,18 @@ namespace billing {
 	// Print number to provided output stream
 	std::ostream& CallInfo::print(std::ostream &_os) const {
 
-		unsigned long long timeSec	= std::chrono::duration_cast<std::chrono::minutes>(endTime - startTime).count();
-		unsigned long long timeInc	= ((((endTime - startTime).count() % 60L) == 0L) ? 0L : 1L);
+		auto timeSec		= duration_cast<minutes>(endTime - startTime).count();
+		auto timeInc		= ((((endTime - startTime).count() % 60L) == 0L) ? 0L : 1L);
+
+		auto callStartTime	= system_clock::to_time_t(startTime);
+		auto callEndTime	= system_clock::to_time_t(endTime);
 
 		_os	<< "Call to "										\
 			<< number										\
 			<< " from "										\
-			<< startTime.count()									\
+			<< std::put_time(std::localtime(&callStartTime), "%c")					\
 			<< " to "										\
-			<< endTime.count()									\
+			<< std::put_time(std::localtime(&callEndTime), "%c")					\
 			<< " lasts "										\
 			<< timeSec + timeInc									\
 			<< " minutes";

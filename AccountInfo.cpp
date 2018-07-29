@@ -1,3 +1,5 @@
+#include <iomanip>
+
 #include "AccountInfo.hpp"
 
 
@@ -7,13 +9,13 @@ namespace billing {
 	// D-tor
 	AccountInfo::~AccountInfo() {
 
-		lastCreditTime = std::chrono::seconds(0);
+		lastCreditTime = system_clock::now();
 
 	}
 
 
 	// Set call info
-	void AccountInfo::setGeneralAcc(const Currency &_generalAcc, const std::chrono::seconds &_lastCreditTime) {
+	void AccountInfo::setGeneralAcc(const Currency &_generalAcc, const system_clock::time_point &_lastCreditTime) {
 
 		generalAcc	= _generalAcc;
 		lastCreditTime	= _lastCreditTime;
@@ -24,10 +26,12 @@ namespace billing {
 	// Print number to provided output stream
 	std::ostream& AccountInfo::print(std::ostream &_os) const {
 
-		_os	<< "General account: "		\
-			<< generalAcc			\
-			<< " (last credit added "	\
-			<< lastCreditTime.count()	\
+		auto creditTime	= system_clock::to_time_t(lastCreditTime);
+
+		_os	<< "General account: "					\
+			<< generalAcc						\
+			<< " (last credit added "				\
+			<< std::put_time(std::localtime(&creditTime), "%c")	\
 			<< ")";
 
 		return _os;

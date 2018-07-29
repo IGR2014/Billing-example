@@ -13,25 +13,29 @@
 namespace billing {
 
 
+	// Not good but helps to reduce boilerplate code with std::chrono
+	using namespace std::chrono;
+
+
 	// Call information storing class
 	class AccountInfo {
 
-		Currency		generalAcc;		// General account value
-		std::chrono::seconds	lastCreditTime;		// Time when last credit was added
+		Currency			generalAcc;		// General account value
+		system_clock::time_point	lastCreditTime;		// Time when last credit was added
 
 
 	public:
 
 		// C-tor
-		AccountInfo() : generalAcc(), lastCreditTime(0) {};
+		AccountInfo() : generalAcc(), lastCreditTime(system_clock::now()) {};
 		// D-tor
 		~AccountInfo();
 
 		// Set call info
-		AccountInfo(const Currency &_generalAcc, const std::chrono::seconds &_lastCreditTime) : generalAcc(_generalAcc), lastCreditTime(_lastCreditTime) {};
+		AccountInfo(const Currency &_generalAcc, const system_clock::time_point &_lastCreditTime) : generalAcc(_generalAcc), lastCreditTime(_lastCreditTime) {};
 
 		// Set general account value
-		void setGeneralAcc(const Currency &_generalAcc, const std::chrono::seconds &_lastCreditTime);
+		void setGeneralAcc(const Currency &_generalAcc, const system_clock::time_point &_lastCreditTime);
 
 		// Get called number
 		inline Currency getGeneralAcc() const {
@@ -41,7 +45,7 @@ namespace billing {
 		}
 
 		// Get call start time
-		inline std::chrono::seconds getLastCreditTime() const {
+		inline system_clock::time_point getLastCreditTime() const {
 
 			return lastCreditTime;
 
